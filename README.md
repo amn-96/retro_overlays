@@ -1,15 +1,21 @@
+# Overlays I use:
+
+- Odin 3: [Watomsk's Overlays](https://github.com/Watomsk/Overlays)
+- Brick: [KrutzOtrem's Overlays](https://github.com/KrutzOtrem/Trimui-Brick-Overlays?tab=readme-ov-file)
+- CubeXX: Combination of [BB64](https://community.muos.dev/t/bb64s-720x720-handheld-bezel-pack-gb-gbc-gba-ngpc-gg-vb-for-rg-cubexx/65) and the custom top-aligned overlays below.
+
 # Custom Top-Aligned Overlays for 720x720 screens
 
 For any platforms that aren't square, I prefer having the game pushed to the top of my screen because it's visually closer to the controls and slightly better for ergos. I wasn't able to find any overlays that accomplished this and also had no grids or scanlines included (I use shaders to get those) so I made my own.
 
-Credits to Watomsk ([link to his github](https://github.com/Watomsk/Overlays)) for the iconography. All my custom overlays use the icons from his 1080p set, just realigned.
+Credits to [Watomsk](https://github.com/Watomsk/Overlays) for the iconography. All my custom overlays use the icons from his 1080p set, just realigned.
 
 Tested on Anbernic RG CubeXX.
 
 ## GBA
 Use with integer scaling and your choice of the BB64 GBA overlays (included).
 
-This config is just retroarch settings on top of the already excellent 720x720 GBA overlays [made by BB64](https://community.muos.dev/t/bb64s-720x720-handheld-bezel-pack-gb-gbc-gba-ngpc-gg-vb-for-rg-cubexx/65)
+This config is just retroarch settings on top of the already excellent 720x720 GBA overlays made by BB64.
 
 #### Quick Menu -> On-Screen Overlay
 Overlay Preset 						GBA 		Your choice of BB64 GBA Overlays
