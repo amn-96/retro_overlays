@@ -24,6 +24,8 @@ This config is just retroarch settings on top of the already excellent 720x720 G
 | Overlay Preset | GBA | Your choice of BB64 GBA Overlays |
 | (Portrait) Overlay Y Offset | 0.065 | The top of the overlay will be off screen, but the game itself will be top-aligned. |
 
+![GBA Example](/screenshots/gba_lazarus.png)
+
 #### Settings -> Video -> Scaling
 
 | Setting | Value | Notes |
@@ -44,6 +46,7 @@ Use with **non-integer scaling**.
 | Viewport Anchor Bias X | 0.5 | Setting doesn't matter |
 | Viewport Anchor Bias Y | 0.0 | Required to align to top |
 
+![GBC Example](/screenshots/gbc_link.png)
 
 ## 4:3 (PSX, Dreamcast etc.)
 Use with **non-integer scaling**.
@@ -55,6 +58,8 @@ Use with **non-integer scaling**.
 | Integer Scale | OFF | |
 | Viewport Anchor Bias X | 0.5 | Setting doesn't matter |
 | Viewport Anchor Bias Y | 0.0 | Required to align to top |
+
+![PSX Example](/screenshots/psx_gt1.png)
 
 
 ## SNES / NES (~8:7)
@@ -72,6 +77,8 @@ This is exactly the same as the 3x integer overscale method talked about by Retr
 | Custom Aspect Ratio (Height) | 717 (3x) | Use the DPAD to select the multipliers |
 
 The rest of the settings have no effect. 
+
+![SNES Example](/screenshots/snes_smw2.png)
 
 ### Non-integer scaled
 This has the same effect as Integer Scale ON + Axis Y + Smart.
