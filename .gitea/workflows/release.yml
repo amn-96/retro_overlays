@@ -1,0 +1,82 @@
+name: Create Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    runs-on: rpi4b-runner-full
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Read VERSION file
+        id: version
+        run: echo "version=$(cat VERSION)" >> $GITHUB_OUTPUT
+
+      #- name: Install apt packages with cache
+      #  run: |
+      #    mkdir -p /data/cache/apt/archives
+      #    echo 'Dir::Cache::Archives "/data/cache/apt/archives";' > /etc/apt/apt.conf.d/99cache
+      #    apt-get update
+      #    apt-get install -y curl jq zip git
+
+      - name: Package overlay files
+        run: |
+          mkdir -p release-package
+          cp -r BB64-GBA release-package/ 2>/dev/null || true
+          cp -r custom release-package/ 2>/dev/null || true
+          cp README.md release-package/ 2>/dev/null || true
+          (cd release-package && zip -r ../overlays-v${{ steps.version.outputs.version }}.zip .)
+
+      - name: Create and push tag
+        run: |
+          git config user.name "gitea-actions[bot]"
+          git config user.email "gitea-actions[bot]@users.noreply.gitea.com"
+          git tag -f -a "v${{ steps.version.outputs.version }}" -m "Release v${{ steps.version.outputs.version }}"
+          git push --force origin "v${{ steps.version.outputs.version }}"
+
+      - name: Create or update release
+        run: |
+          TAG="v${{ steps.version.outputs.version }}"
+          ASSET_NAME="overlays-v${{ steps.version.outputs.version }}.zip"
+
+          # Check if release exists
+          RELEASE_ID=$(curl -s \
+            -H "Authorization: token ${{ secrets.RELEASE_TOKEN }}" \
+            "${{ gitea.server_url }}/api/v1/repos/${{ gitea.repository }}/releases/tags/${TAG}" \
+            | jq -r '.id // empty')
+
+          if [ -z "$RELEASE_ID" ]; then
+            # Create new release
+            echo "Creating new release for ${TAG}"
+            RELEASE_ID=$(curl -X POST \
+              -H "Authorization: token ${{ secrets.RELEASE_TOKEN }}" \
+              -H "Content-Type: application/json" \
+              -d "{\"tag_name\":\"${TAG}\",\"name\":\"Release ${TAG}\",\"body\":\"Overlay package release ${TAG}\\n\\nDownload the zip file to get all overlay files.\"}" \
+              "${{ gitea.server_url }}/api/v1/repos/${{ gitea.repository }}/releases" | jq -r '.id')
+          else
+            # Update existing release
+            echo "Updating existing release for ${TAG}"
+
+            # Delete old assets
+            curl -s -H "Authorization: token ${{ secrets.RELEASE_TOKEN }}" \
+              "${{ gitea.server_url }}/api/v1/repos/${{ gitea.repository }}/releases/${RELEASE_ID}/assets" \
+              | jq -r '.[].id' | while read ASSET_ID; do
+              curl -X DELETE \
+                -H "Authorization: token ${{ secrets.RELEASE_TOKEN }}" \
+                "${{ gitea.server_url }}/api/v1/repos/${{ gitea.repository }}/releases/${RELEASE_ID}/assets/${ASSET_ID}"
+            done
+          fi
+
+          # Upload asset
+          echo "Uploading asset ${ASSET_NAME}"
+          curl -X POST \
+            -H "Authorization: token ${{ secrets.RELEASE_TOKEN }}" \
+            -H "Content-Type: multipart/form-data" \
+            -F "attachment=@${ASSET_NAME}" \
+            "${{ gitea.server_url }}/api/v1/repos/${{ gitea.repository }}/releases/${RELEASE_ID}/assets?name=${ASSET_NAME}"

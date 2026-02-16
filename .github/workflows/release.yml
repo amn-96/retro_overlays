@@ -1,0 +1,47 @@
+name: Create Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Read VERSION file
+        id: version
+        run: echo "version=$(cat VERSION)" >> $GITHUB_OUTPUT
+
+      - name: Package overlay files
+        run: |
+          mkdir -p release-package
+          cp -r BB64-GBA release-package/ 2>/dev/null || true
+          cp -r custom release-package/ 2>/dev/null || true
+          cp README.md release-package/ 2>/dev/null || true
+          (cd release-package && zip -r ../overlays-v${{ steps.version.outputs.version }}.zip .)
+
+      - name: Create and push tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -f -a "v${{ steps.version.outputs.version }}" -m "Release v${{ steps.version.outputs.version }}"
+          git push --force origin "v${{ steps.version.outputs.version }}"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ steps.version.outputs.version }}
+          name: Release v${{ steps.version.outputs.version }}
+          body: |
+            Overlay package release v${{ steps.version.outputs.version }}
+
+            Download the zip file below to get all overlay files.
+          files: overlays-v${{ steps.version.outputs.version }}.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
