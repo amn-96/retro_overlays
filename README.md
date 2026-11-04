@@ -6,7 +6,7 @@
 
 # Custom Top-Aligned Overlays for 720x720 screens
 
-For any platforms that aren't square, I prefer having the game pushed to the top of my screen because it's visually closer to the controls and better for ergos. I wasn't able to find any overlays that accomplished this and also had no grids or scanlines included (I prefer to use shaders to get those) so I made my own. Some of them have shadow and no-shadow options; some just have the shadows. For all platforms, the overlays *do not need an offset*, but the *viewports do*.
+For any platforms that aren't square, I prefer having the game pushed to the top of my screen because it's visually closer to the controls and better for ergos. I wasn't able to find any overlays that accomplished this and also had no grids or scanlines included (I prefer to use shaders to get those) so I made my own. Some of them have shadow and no-shadow options; some just have the shadows. Other than for GBA, the overlays *do not need an offset*, but the *viewports do*.
 
 Credits to [Watomsk](https://github.com/Watomsk/Overlays) for the iconography. All my custom overlays use the icons from his 1080p set, just realigned.
 
