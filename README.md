@@ -89,7 +89,7 @@ I use MuOS and Pickles changes the way you do this. It's simpler in some ways an
 | Video/Aspect Ratio | Pixel Perfect | Pickles equivalent of 1:1 PAR |
 | Video/Scale Multiplier | 3x | We are doing a 3x integer scale |
 | Video/Scaling Mode | Full Height | Integer **WILL NOT** work properly here. I don't know why it lies, but setting the aspect ratio + scale + `integer` here fits to the screen width so you get non-integer scaling. |
-| Dislpay/Adjustment/Y Offset | -24 | Same as before. |
+| Display/Adjustment/Y Offset | -24 | Same as before. |
 
 ![SNES Example](/screenshots/snes_smw2.png)
 
