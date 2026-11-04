@@ -97,7 +97,7 @@ This one is 8:7 for real. Non-integer scaled only.
 Integer overscale cuts off too much here imo, but it *could* do 768x720 to fill the screen entirely. Set `Integer Scale Axis` to `X` and `Overscale` for that. I recommend a Sharp Shimmerless Shader + light CRT shader if you'd like.
 
 ### Non-integer scaled
-Use `NES_top.cfg`. You can al
+Use `NES_top.cfg`. 
 
 #### Settings -> Video -> Scaling
 
