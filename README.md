@@ -65,6 +65,8 @@ Use with **non-integer scaling**.
 ## SNES (~8:7, but not quite.)
 SNES is more involved due to the 1:1 PAR resolution of 256x239 but it will work with a 3x integer scale. This is really 256x224 + a top/bottom overscan, meaning a 3x integer scale will disply at 768x672, NOT 768x717 as Retroarch claims in the settings below. The overlays are sized to 720x672 so that the values below work.
 
+If you want non-integer scaling, `SNES_top_noninteger` will work.
+
 ### Integer Overscaled
 This is similar to the 3x integer overscale method talked about by RetroGameCorps in his review of the CubeXX. For some reason, Retroarch's viewport anchor bias settings didn't behave the way they should (?) and you need to set up a custom resolution and offest to work properly.
 
